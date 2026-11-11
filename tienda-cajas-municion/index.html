@@ -1,0 +1,486 @@
+<title>Caja 9mm · 50</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@600;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: banda de producto (ilustración + compra) → ficha técnica en tabla → packs → FAQ. Estética de caja de almacén: estarcido, latón, verde oliva. */
+:root {
+  --bg: #f3f2ec;
+  --surface: #fbfbf7;
+  --fg: #1e2119;
+  --muted: #5d6253;
+  --line: #d8d8cc;
+  --olive: #4b5631;
+  --brass: #a8771f;
+  --brass-soft: #f1e3c4;
+  --ok: #2f6b3a;
+  --box: #4b5631;
+  --font-display: "Big Shoulders Stencil Display", "Impact", "Arial Narrow", sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15170f; --surface: #1d2016; --fg: #ecebdf; --muted: #a3a792; --line: #33372a;
+    --olive: #9aab6a; --brass: #d9a64a; --brass-soft: #3a2f17; --ok: #7cc18a; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15170f; --surface: #1d2016; --fg: #ecebdf; --muted: #a3a792; --line: #33372a;
+  --olive: #9aab6a; --brass: #d9a64a; --brass-soft: #3a2f17; --ok: #7cc18a; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 800; letter-spacing: .01em; line-height: 1; text-wrap: balance; margin: 0; text-transform: uppercase; }
+.mono { font-family: var(--font-mono); }
+.label { font-family: var(--font-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+
+/* Aviso de muestra */
+.notice { background: var(--brass-soft); color: var(--fg); font-size: 13px; }
+.notice .wrap { padding-block: 8px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.notice b { font-family: var(--font-mono); font-weight: 500; letter-spacing: .08em; }
+
+/* Cabecera */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+header .wrap { display: flex; align-items: center; justify-content: space-between; padding-block: 12px; gap: 16px; }
+.brand { font-family: var(--font-display); font-size: 26px; font-weight: 800; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+.brand span { color: var(--brass); }
+nav { display: flex; gap: 20px; align-items: center; }
+nav a { color: var(--muted); text-decoration: none; font-size: 14px; }
+nav a:hover { color: var(--fg); }
+.cart-btn { background: var(--fg); color: var(--bg); border: 0; border-radius: 4px; padding: 8px 14px; display: flex; gap: 8px; align-items: center; font-size: 14px; }
+.cart-btn .count { font-family: var(--font-mono); background: var(--brass); color: #1e2119; border-radius: 3px; padding: 0 6px; min-width: 22px; text-align: center; }
+@media (max-width: 640px) { nav a { display: none; } }
+
+/* Producto */
+.product { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; padding-block: 48px 56px; align-items: start; }
+@media (max-width: 860px) { .product { grid-template-columns: 1fr; gap: 28px; padding-block: 28px 40px; } }
+.stage { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 24px; position: relative; min-width: 0; }
+.stage svg { width: 100%; height: auto; display: block; }
+.stage .tag { position: absolute; top: 14px; left: 14px; }
+.views { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.views button { background: transparent; border: 1px solid var(--line); color: var(--muted); border-radius: 4px; padding: 6px 12px; font-size: 13px; }
+.views button[aria-pressed="true"] { border-color: var(--fg); color: var(--fg); }
+
+.buy { min-width: 0; display: flex; flex-direction: column; gap: 22px; }
+.buy h1 { font-size: clamp(44px, 7vw, 76px); }
+.buy h1 em { font-style: normal; color: var(--brass); }
+.lede { color: var(--muted); max-width: 52ch; margin: 0; }
+.price-row { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.price { font-family: var(--font-display); font-size: 48px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.per { font-family: var(--font-mono); font-size: 13px; color: var(--muted); }
+.stock { font-size: 13px; color: var(--ok); display: flex; align-items: center; gap: 6px; }
+.stock::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+
+fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+legend { padding: 0; margin-bottom: 10px; }
+.swatches { display: flex; gap: 10px; flex-wrap: wrap; }
+.swatch { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 4px; padding: 6px 12px 6px 6px; font-size: 14px; }
+.swatch i { width: 22px; height: 22px; border-radius: 3px; border: 1px solid rgba(0,0,0,.25); display: block; }
+.swatch[aria-checked="true"] { border-color: var(--fg); box-shadow: inset 0 0 0 1px var(--fg); }
+
+.packs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pack { border: 1px solid var(--line); background: var(--surface); color: var(--fg); border-radius: 4px; padding: 12px; text-align: left; display: flex; flex-direction: column; gap: 2px; }
+.pack strong { font-family: var(--font-display); font-size: 24px; text-transform: uppercase; }
+.pack .p { font-family: var(--font-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.pack .save { font-family: var(--font-mono); font-size: 11px; color: var(--brass); letter-spacing: .06em; text-transform: uppercase; min-height: 1.4em; }
+.pack[aria-checked="true"] { border-color: var(--fg); box-shadow: inset 0 0 0 1px var(--fg); }
+
+.actions { display: flex; gap: 10px; align-items: stretch; flex-wrap: wrap; }
+.qty { display: flex; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+.qty button { background: none; border: 0; color: var(--fg); width: 40px; font-size: 18px; }
+.qty input { width: 44px; border: 0; background: none; text-align: center; font-family: var(--font-mono); font-size: 16px; color: var(--fg); }
+.add { flex: 1; min-width: 200px; background: var(--brass); color: #1e2119; border: 0; border-radius: 4px; padding: 14px 20px; font-weight: 600; font-size: 16px; }
+.add:hover { filter: brightness(1.06); }
+.perks { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+.perks b { display: block; color: var(--fg); font-weight: 600; }
+@media (max-width: 480px) { .perks { grid-template-columns: 1fr; } .packs { grid-template-columns: 1fr; } }
+
+/* Secciones */
+section.band { border-top: 1px solid var(--line); }
+section.band .wrap { padding-block: 56px; }
+.sec-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+.sec-head h2 { font-size: clamp(34px, 5vw, 48px); }
+
+.features { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+@media (max-width: 860px) { .features { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .features { grid-template-columns: 1fr; } }
+.feature { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.feature .k { font-family: var(--font-display); font-size: 40px; font-weight: 800; color: var(--olive); line-height: 1; }
+.feature h3 { font-size: 22px; }
+.feature p { margin: 0; color: var(--muted); font-size: 15px; }
+
+.spec-wrap { overflow-x: auto; }
+table.spec { width: 100%; border-collapse: collapse; font-size: 15px; }
+table.spec th, table.spec td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+table.spec th { width: 38%; font-weight: 500; color: var(--muted); padding-right: 16px; }
+table.spec td { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.tbc { font-family: var(--font-mono); font-size: 11px; color: var(--brass); letter-spacing: .06em; margin-left: 6px; }
+.spec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+@media (max-width: 860px) { .spec-grid { grid-template-columns: 1fr; gap: 24px; } }
+
+details { border-bottom: 1px solid var(--line); padding-block: 14px; }
+details summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+details summary::after { content: "+"; font-family: var(--font-mono); color: var(--muted); }
+details[open] summary::after { content: "−"; }
+details p { margin: 10px 0 0; color: var(--muted); max-width: 65ch; }
+
+footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+footer .wrap { padding-block: 28px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+/* Carrito */
+.scrim { position: fixed; inset: 0; background: rgba(10, 12, 6, .45); z-index: 20; }
+.drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--surface); z-index: 21; display: flex; flex-direction: column; border-left: 1px solid var(--line);
+  padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); padding-right: env(safe-area-inset-right, 0px); transform: translateX(0); transition: transform .25s ease; }
+.drawer[hidden] { display: flex !important; transform: translateX(105%); visibility: hidden; }
+.drawer-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--line); }
+.drawer-head h2 { font-size: 30px; }
+.x { background: none; border: 1px solid var(--line); color: var(--fg); border-radius: 4px; width: 34px; height: 34px; }
+.drawer-body { flex: 1; overflow-y: auto; padding: 8px 20px; }
+.line { display: grid; grid-template-columns: 44px 1fr auto; gap: 12px; align-items: center; padding-block: 14px; border-bottom: 1px solid var(--line); }
+.line .chip { width: 44px; height: 44px; border-radius: 4px; border: 1px solid rgba(0,0,0,.25); }
+.line .t { font-weight: 600; font-size: 14px; }
+.line .s { font-size: 12px; color: var(--muted); font-family: var(--font-mono); }
+.line .r { text-align: right; font-family: var(--font-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.line .rm { background: none; border: 0; color: var(--muted); font-size: 12px; text-decoration: underline; padding: 0; }
+.empty { color: var(--muted); padding-block: 40px; text-align: center; }
+.drawer-foot { border-top: 1px solid var(--line); padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+.sum { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 14px; font-variant-numeric: tabular-nums; }
+.sum.total { font-size: 18px; font-weight: 500; }
+.ship-bar { height: 4px; background: var(--line); border-radius: 2px; overflow: hidden; }
+.ship-bar i { display: block; height: 100%; background: var(--olive); width: 0; transition: width .3s; }
+.ship-msg { font-size: 12px; color: var(--muted); }
+.checkout { background: var(--fg); color: var(--bg); border: 0; border-radius: 4px; padding: 14px; font-weight: 600; }
+.checkout:disabled { opacity: .4; cursor: not-allowed; }
+
+form.co { display: flex; flex-direction: column; gap: 12px; padding-block: 12px; }
+form.co label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+form.co input { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 10px; }
+.done { padding-block: 32px; display: flex; flex-direction: column; gap: 10px; }
+.done h3 { font-size: 30px; color: var(--ok); }
+.done p { margin: 0; color: var(--muted); }
+
+.toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 4px; font-size: 14px; z-index: 30; }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+
+<div class="notice"><div class="wrap"><b>MUESTRA</b> Página de demostración. Precios, medidas y plazos son provisionales y no se procesan pagos.</div></div>
+
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect x="2" y="6" width="22" height="16" rx="2" fill="var(--olive)"/><rect x="2" y="3" width="22" height="5" rx="1.5" fill="var(--brass)"/></svg>
+      Caja<span>·</span>9mm
+    </div>
+    <nav>
+      <a href="#caracteristicas">Características</a>
+      <a href="#ficha">Ficha técnica</a>
+      <a href="#preguntas">Preguntas</a>
+      <button class="cart-btn" id="openCart" type="button" aria-label="Abrir carrito">Carrito <span class="count" id="cartCount">0</span></button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="product">
+      <div class="stage">
+        <span class="label tag" id="viewLabel">Vista superior · tapa abierta</span>
+        <svg id="boxSvg" viewBox="0 0 520 420" role="img" aria-label="Ilustración de la caja con 50 alojamientos para cartuchos de 9 mm"></svg>
+        <div class="views" role="group" aria-label="Vista">
+          <button type="button" data-view="open" aria-pressed="true">Abierta</button>
+          <button type="button" data-view="closed" aria-pressed="false">Cerrada</button>
+        </div>
+      </div>
+
+      <div class="buy">
+        <div>
+          <div class="label">Impresa en 3D · PETG</div>
+          <h1 style="margin-top:8px">Caja de munición <em>9 mm</em> para 50 cartuchos</h1>
+        </div>
+        <p class="lede">Bandeja de 5 × 10 alojamientos para 9×19 Parabellum, con tapa abatible y cierre a presión. Cada cartucho queda separado, de pie y con el culote a la vista, para contar de un vistazo en la galería o en el banco de recarga.</p>
+
+        <div class="price-row">
+          <span class="price" id="price">6,90 €</span>
+          <span class="per" id="perUnit">por caja</span>
+          <span class="stock">Se imprime bajo pedido · envío en 3–5 días</span>
+        </div>
+
+        <fieldset>
+          <legend class="label">Color: <span id="colorName" style="color:var(--fg)">Verde oliva</span></legend>
+          <div class="swatches" role="radiogroup" id="swatches"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend class="label">Formato</legend>
+          <div class="packs" role="radiogroup" id="packs"></div>
+        </fieldset>
+
+        <div class="actions">
+          <div class="qty">
+            <button type="button" id="qMinus" aria-label="Quitar uno">−</button>
+            <input id="qty" type="text" inputmode="numeric" value="1" aria-label="Cantidad">
+            <button type="button" id="qPlus" aria-label="Añadir uno">+</button>
+          </div>
+          <button class="add" id="addBtn" type="button">Añadir al carrito · <span id="addTotal">6,90 €</span></button>
+        </div>
+
+        <ul class="perks">
+          <li><b>Envío gratis</b>desde 30 € en península</li>
+          <li><b>Apilable</b>las cajas encajan entre sí</li>
+          <li><b>Etiqueta</b>zona en la tapa para rotular</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="band" id="caracteristicas">
+    <div class="wrap">
+      <div class="sec-head"><h2>Hecha para el banco y la galería</h2><span class="label">Por qué esta caja</span></div>
+      <div class="features">
+        <div class="feature"><span class="k">50</span><h3>Una caja, una caja</h3><p>Coincide con la caja comercial estándar de 50 cartuchos. Vacías una y llenas la otra sin contar.</p></div>
+        <div class="feature"><span class="k">5×10</span><h3>Bandeja con alojamientos</h3><p>Cada cartucho en su hueco. Nada rueda ni se golpea al transportarlo en la bolsa.</p></div>
+        <div class="feature"><span class="k">PETG</span><h3>Resistente a disolventes</h3><p>Aguanta mejor que el PLA el calor del maletero y el contacto con aceites de limpieza.</p></div>
+        <div class="feature"><span class="k">ID</span><h3>Rotulable</h3><p>Hueco en la tapa para anotar lote, peso de puntas y carga. Útil si recargas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="ficha">
+    <div class="wrap spec-grid">
+      <div>
+        <div class="sec-head"><h2>Ficha técnica</h2></div>
+        <p class="lede">Datos del modelo publicado en MakerWorld. Las cifras marcadas como «por confirmar» se fijarán tras imprimir y medir la primera tirada.</p>
+      </div>
+      <div class="spec-wrap">
+        <table class="spec">
+          <tr><th>Calibre</th><td>9×19 mm Parabellum</td></tr>
+          <tr><th>Capacidad</th><td>50 cartuchos (5 × 10)</td></tr>
+          <tr><th>Medidas exteriores</th><td>≈ 115 × 65 × 45 mm<span class="tbc">POR CONFIRMAR</span></td></tr>
+          <tr><th>Peso en vacío</th><td>≈ 70 g<span class="tbc">POR CONFIRMAR</span></td></tr>
+          <tr><th>Material</th><td>PETG (PLA bajo pedido)</td></tr>
+          <tr><th>Cierre</th><td>Tapa abatible con pestaña a presión</td></tr>
+          <tr><th>Fabricación</th><td>Impresión FDM, capa 0,2 mm</td></tr>
+          <tr><th>Plazo</th><td>3–5 días laborables</td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="preguntas">
+    <div class="wrap">
+      <div class="sec-head"><h2>Preguntas frecuentes</h2></div>
+      <details open><summary>¿Vale para otros calibres?</summary><p>Esta versión está pensada para 9×19. Cartuchos como .380 ACP entran pero quedan sueltos. Si hay demanda podemos preparar versiones para .45 ACP, .40 S&amp;W o .22 LR.</p></details>
+      <details><summary>¿Venden munición?</summary><p>No. Solo vendemos la caja de almacenamiento vacía. La caja no contiene ni incluye cartuchos.</p></details>
+      <details><summary>¿Puedo pedir un color que no aparece?</summary><p>Sí. Escríbenos con el color y la cantidad. Para pedidos de 10 cajas o más el color personalizado no tiene recargo.</p></details>
+      <details><summary>¿Hacen grabado o logotipo?</summary><p>Podemos imprimir texto en relieve en la tapa, por ejemplo el nombre de tu club. Pídenos presupuesto.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Caja·9mm · Página de muestra · 2026</span>
+    <span>Diseño de la caja basado en el modelo «Ammo Box 9mm 50 rounds» de MakerWorld.</span>
+  </div>
+</footer>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" hidden aria-label="Carrito">
+  <div class="drawer-head"><h2 id="drawerTitle">Tu carrito</h2><button class="x" id="closeCart" type="button" aria-label="Cerrar">✕</button></div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-foot" id="drawerFoot"></div>
+</aside>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function () {
+  var COLORS = [
+    { id: "oliva", name: "Verde oliva", hex: "#4b5631" },
+    { id: "negro", name: "Negro", hex: "#232323" },
+    { id: "coyote", name: "Coyote", hex: "#9c7f58" },
+    { id: "gris", name: "Gris acero", hex: "#6c7177" },
+    { id: "naranja", name: "Naranja", hex: "#d4682a" }
+  ];
+  var PACKS = [
+    { id: "p1", name: "1 caja", n: 1, price: 6.90 },
+    { id: "p3", name: "Pack 3", n: 3, price: 18.90 },
+    { id: "p5", name: "Pack 5", n: 5, price: 29.90 }
+  ];
+  var FREE_SHIP = 30, SHIP = 4.50;
+  var state = { color: COLORS[0], pack: PACKS[0], qty: 1, view: "open", cart: [], checkout: false, done: false };
+
+  var eur = function (v) { return v.toFixed(2).replace(".", ",") + " €"; };
+  var $ = function (id) { return document.getElementById(id); };
+
+  // Selectores
+  var sw = $("swatches");
+  COLORS.forEach(function (c) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "swatch"; b.setAttribute("role", "radio"); b.dataset.id = c.id;
+    b.innerHTML = '<i style="background:' + c.hex + '"></i>' + c.name;
+    b.onclick = function () { state.color = c; render(); };
+    sw.appendChild(b);
+  });
+  var pk = $("packs");
+  PACKS.forEach(function (p) {
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "pack"; b.setAttribute("role", "radio"); b.dataset.id = p.id;
+    var save = Math.round((1 - p.price / (PACKS[0].price * p.n)) * 100);
+    b.innerHTML = '<strong>' + p.name + '</strong><span class="p">' + eur(p.price) + '</span><span class="save">' + (save > 0 ? "Ahorras " + save + " %" : "") + '</span>';
+    b.onclick = function () { state.pack = p; render(); };
+    pk.appendChild(b);
+  });
+  document.querySelectorAll(".views button").forEach(function (b) {
+    b.onclick = function () { state.view = b.dataset.view; render(); };
+  });
+  $("qMinus").onclick = function () { state.qty = Math.max(1, state.qty - 1); render(); };
+  $("qPlus").onclick = function () { state.qty = Math.min(99, state.qty + 1); render(); };
+  $("qty").oninput = function (e) { var v = parseInt(e.target.value, 10); state.qty = isNaN(v) ? 1 : Math.min(99, Math.max(1, v)); renderPrice(); };
+  $("qty").onblur = render;
+
+  // Ilustración SVG
+  function shade(hex, amt) {
+    var n = parseInt(hex.slice(1), 16), r = (n >> 16) + amt, g = ((n >> 8) & 255) + amt, b = (n & 255) + amt;
+    var cl = function (x) { return Math.max(0, Math.min(255, x)); };
+    return "rgb(" + cl(r) + "," + cl(g) + "," + cl(b) + ")";
+  }
+  function drawBox() {
+    var c = state.color.hex, dark = shade(c, -28), light = shade(c, 22);
+    var s = '';
+    if (state.view === "open") {
+      // Tapa abierta (arriba)
+      s += '<rect x="60" y="20" width="400" height="110" rx="10" fill="' + dark + '"/>';
+      s += '<rect x="80" y="38" width="360" height="74" rx="6" fill="' + c + '"/>';
+      s += '<rect x="150" y="56" width="220" height="38" rx="3" fill="none" stroke="' + light + '" stroke-width="2" stroke-dasharray="6 5"/>';
+      s += '<text x="260" y="81" text-anchor="middle" font-family="Big Shoulders Stencil Display, Impact, sans-serif" font-weight="800" font-size="22" fill="' + light + '">9MM · 50</text>';
+      // Bisagra
+      s += '<rect x="90" y="128" width="340" height="10" rx="3" fill="' + dark + '"/>';
+      // Cuerpo
+      s += '<rect x="60" y="136" width="400" height="264" rx="10" fill="' + c + '"/>';
+      s += '<rect x="76" y="152" width="368" height="232" rx="6" fill="' + dark + '"/>';
+      // 5 × 10 alojamientos con culotes de latón
+      for (var r = 0; r < 5; r++) for (var k = 0; k < 10; k++) {
+        var cx = 96 + k * 36.4, cy = 176 + r * 46;
+        s += '<circle cx="' + cx + '" cy="' + cy + '" r="15.5" fill="' + shade(c, -55) + '"/>';
+        s += '<circle cx="' + cx + '" cy="' + cy + '" r="12" fill="#b8892e"/>';
+        s += '<circle cx="' + cx + '" cy="' + cy + '" r="10" fill="none" stroke="#8a6420" stroke-width="1"/>';
+        s += '<circle cx="' + cx + '" cy="' + cy + '" r="3.6" fill="#c9c3b2" stroke="#8d8676" stroke-width=".8"/>';
+      }
+    } else {
+      // Cerrada, en perspectiva frontal
+      s += '<polygon points="90,110 430,110 470,150 50,150" fill="' + light + '"/>';
+      s += '<rect x="50" y="150" width="420" height="230" rx="8" fill="' + c + '"/>';
+      s += '<rect x="50" y="150" width="420" height="70" fill="' + dark + '"/>';
+      s += '<rect x="230" y="208" width="60" height="26" rx="4" fill="' + shade(c, -45) + '"/>';
+      s += '<rect x="130" y="262" width="260" height="70" rx="4" fill="none" stroke="' + light + '" stroke-width="2" stroke-dasharray="7 6"/>';
+      s += '<text x="260" y="310" text-anchor="middle" font-family="Big Shoulders Stencil Display, Impact, sans-serif" font-weight="800" font-size="38" fill="' + light + '">9MM · 50</text>';
+      s += '<rect x="80" y="380" width="360" height="8" rx="3" fill="' + dark + '"/>';
+    }
+    $("boxSvg").innerHTML = s;
+    $("viewLabel").textContent = state.view === "open" ? "Vista superior · tapa abierta" : "Vista frontal · cerrada";
+  }
+
+  function lineTotal() { return state.pack.price * state.qty; }
+  function renderPrice() {
+    $("price").textContent = eur(state.pack.price);
+    $("perUnit").textContent = state.pack.n > 1 ? "· " + eur(state.pack.price / state.pack.n) + " por caja" : "por caja";
+    $("addTotal").textContent = eur(lineTotal());
+  }
+
+  function render() {
+    document.documentElement.style.setProperty("--box", state.color.hex);
+    $("colorName").textContent = state.color.name;
+    sw.querySelectorAll(".swatch").forEach(function (b) { b.setAttribute("aria-checked", b.dataset.id === state.color.id); });
+    pk.querySelectorAll(".pack").forEach(function (b) { b.setAttribute("aria-checked", b.dataset.id === state.pack.id); });
+    document.querySelectorAll(".views button").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.view === state.view); });
+    $("qty").value = state.qty;
+    renderPrice();
+    drawBox();
+    renderCart();
+  }
+
+  // Carrito
+  var toastT;
+  function toast(msg) { var t = $("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { t.hidden = true; }, 2200); }
+
+  $("addBtn").onclick = function () {
+    var key = state.color.id + "-" + state.pack.id;
+    var ex = state.cart.find(function (l) { return l.key === key; });
+    if (ex) ex.qty += state.qty;
+    else state.cart.push({ key: key, color: state.color, pack: state.pack, qty: state.qty });
+    state.done = false; state.checkout = false;
+    renderCart();
+    toast("Añadido: " + state.pack.name + " · " + state.color.name);
+  };
+
+  function totals() {
+    var sub = state.cart.reduce(function (a, l) { return a + l.pack.price * l.qty; }, 0);
+    var boxes = state.cart.reduce(function (a, l) { return a + l.pack.n * l.qty; }, 0);
+    var ship = sub === 0 || sub >= FREE_SHIP ? 0 : SHIP;
+    return { sub: sub, boxes: boxes, ship: ship, total: sub + ship };
+  }
+
+  function renderCart() {
+    var t = totals();
+    $("cartCount").textContent = t.boxes;
+    var body = $("drawerBody"), foot = $("drawerFoot");
+    if (state.done) {
+      $("drawerTitle").textContent = "Pedido";
+      body.innerHTML = '<div class="done"><h3>Pedido de muestra registrado</h3><p>' + t.boxes + ' cajas · ' + eur(t.total) + '</p><p>Esto es una demostración: no se ha cobrado nada ni se ha enviado ningún correo.</p></div>';
+      foot.innerHTML = '<button class="checkout" type="button" id="restart">Volver a la tienda</button>';
+      $("restart").onclick = function () { state.cart = []; state.done = false; state.checkout = false; closeCart(); render(); };
+      return;
+    }
+    if (state.checkout) {
+      $("drawerTitle").textContent = "Datos de envío";
+      body.innerHTML = '<form class="co" id="coForm">' +
+        '<label for="coName">Nombre y apellidos<input id="coName" required autocomplete="name" value="Ana García"></label>' +
+        '<label for="coAddr">Dirección<input id="coAddr" required autocomplete="street-address" value="C/ Mayor 12, 2º B"></label>' +
+        '<label for="coCity">Ciudad y código postal<input id="coCity" required value="50001 Zaragoza"></label>' +
+        '<label for="coMail">Correo<input id="coMail" type="email" required autocomplete="email" value="ana@ejemplo.com"></label>' +
+        '<p class="ship-msg">Datos de ejemplo rellenados para la demostración.</p></form>';
+      foot.innerHTML = sumsHtml(t) + '<button class="checkout" type="submit" form="coForm">Confirmar pedido · ' + eur(t.total) + '</button>';
+      $("coForm").onsubmit = function (e) { e.preventDefault(); state.done = true; renderCart(); };
+      return;
+    }
+    $("drawerTitle").textContent = "Tu carrito";
+    if (!state.cart.length) {
+      body.innerHTML = '<p class="empty">El carrito está vacío.<br>Elige color y formato y pulsa «Añadir al carrito».</p>';
+    } else {
+      body.innerHTML = state.cart.map(function (l, i) {
+        return '<div class="line"><span class="chip" style="background:' + l.color.hex + '"></span>' +
+          '<div><div class="t">' + l.pack.name + ' · ' + l.color.name + '</div><div class="s">' + l.qty + ' × ' + eur(l.pack.price) + '</div>' +
+          '<button class="rm" type="button" data-i="' + i + '">Quitar</button></div>' +
+          '<div class="r">' + eur(l.pack.price * l.qty) + '</div></div>';
+      }).join("");
+      body.querySelectorAll(".rm").forEach(function (b) { b.onclick = function () { state.cart.splice(+b.dataset.i, 1); renderCart(); }; });
+    }
+    var left = Math.max(0, FREE_SHIP - t.sub);
+    foot.innerHTML = '<div class="ship-bar"><i style="width:' + Math.min(100, t.sub / FREE_SHIP * 100) + '%"></i></div>' +
+      '<div class="ship-msg">' + (left > 0 ? "Te faltan " + eur(left) + " para el envío gratis" : "Envío gratis incluido") + '</div>' +
+      sumsHtml(t) + '<button class="checkout" type="button" id="goCo"' + (state.cart.length ? '' : ' disabled') + '>Tramitar pedido</button>';
+    $("goCo").onclick = function () { state.checkout = true; renderCart(); };
+  }
+  function sumsHtml(t) {
+    return '<div class="sum"><span>Subtotal (' + t.boxes + ' cajas)</span><span>' + eur(t.sub) + '</span></div>' +
+      '<div class="sum"><span>Envío</span><span>' + (t.ship ? eur(t.ship) : "Gratis") + '</span></div>' +
+      '<div class="sum total"><span>Total</span><span>' + eur(t.total) + '</span></div>';
+  }
+
+  function openCart() { $("scrim").hidden = false; $("drawer").hidden = false; $("closeCart").focus(); }
+  function closeCart() { $("scrim").hidden = true; $("drawer").hidden = true; }
+  $("openCart").onclick = openCart;
+  $("closeCart").onclick = closeCart;
+  $("scrim").onclick = closeCart;
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeCart(); });
+
+  render();
+})();
+</script>
